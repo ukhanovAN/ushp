@@ -24,12 +24,20 @@ list<string> division(string text) {
     return all_words;
 }
 
+void size_of_s(vector<string> &all_words) {
+    for (int i = 0; i < all_words.size(); i++) {
+        if (all_words[i][0] >= 'А' && all_words[i][0] <= 'Я') {
+            all_words[i][0] = all_words[i][0] + ('а' - 'А');
+        }
+    }
+}
+
 vector <string> bubble(vector<string> &all_words) {
     for (unsigned int i = 0; i < all_words.size(); i++) {
         for (unsigned int j = 0; j < all_words.size() - 1; j++) {
-            if (all_words[j][0] >= 'А' && all_words[j][0] <= 'Я') {
+            /*if (all_words[j][0] >= 'А' && all_words[j][0] <= 'Я') {
                 all_words[j][0] = all_words[j][0] + ('а' - 'А');
-            }
+            }*/
             if (all_words[j][0] > all_words[j + 1][0]) {
                 string buff = all_words[j];
                 all_words[j] = all_words[j + 1];
@@ -41,8 +49,9 @@ vector <string> bubble(vector<string> &all_words) {
 }
 
 void f_statistic(int *statistic, vector<string> &all_words, int k, int i) {
-    if (all_words[k][i] >= '0' && all_words[k][0] <= '9') {
-        statistic[int(all_words[k][i])] += 1;
+    if (all_words[k][i] >= '0' && all_words[k][i] <= '9') {
+        statistic[int(all_words[k][i])-48] += 1;
+        //cout << "proverca:: " << all_words[k][i];
     }
     else if (all_words[k][i] >= 'А' && all_words[k][i] <= 'Я') {
         statistic[10 + int(all_words[k][i] - 'А')] += 1;
@@ -74,6 +83,7 @@ int main()
         cout << all_words[i] << " ";
     }
     files.close();
+    size_of_s(all_words);
     ofstream exit;
     exit.open("exit.txt");
     for (int s = 0; s < 42; s++) {
@@ -82,9 +92,9 @@ int main()
     unsigned int start_time = clock();
     bubble(all_words);
     unsigned int end_time = clock();
-    cout << endl << "Вариант 1: Кириллица, по алфавиту, по возрастанию, учитывать числа, сортировка пузырьком" << endl;
+    cout << endl << endl << "Вариант 1: Кириллица, по алфавиту, по возрастанию, учитывать числа, сортировка пузырьком" << endl;
     cout << "Количество слов: " << all_words.size() << endl;
-    cout << "Время сортировки: " << end_time - start_time << endl;
+    cout << "Время сортировки: " << end_time - start_time << " сек" << endl;
     exit << all_words[0];
     f_statistic(statistics, all_words, 0, 0);
     for (int k = 1; k < all_words.size(); k++) {
@@ -98,7 +108,7 @@ int main()
         }
     }
     exit.close();
-    cout << endl << "statistics: " << endl;
+    cout << endl << "Статистика (количество слов на каждую букву): " << endl;
     for (int q = 0; q < 42; q++) {
         if (q <= 9) {
             cout << q << ": " << statistics[q] << endl;
