@@ -10,13 +10,11 @@ list<string> division(string text) {
     list<string> all_words;
     vector <char> word;
     for (char symbol : text) {
-        //cout << symbol;
         if ((symbol >= '0' && symbol <= '9') || (symbol >= 'А' && symbol <= 'я')) {
             word.push_back(symbol);
         }
         else if (!word.empty()) {
             string fword(word.begin(), word.end());
-            //cout << fword<<" : ";
             all_words.push_back(fword);
             word.clear();
         }
@@ -35,9 +33,6 @@ void size_of_s(vector<string> &all_words) {
 vector <string> bubble(vector<string> &all_words) {
     for (unsigned int i = 0; i < all_words.size(); i++) {
         for (unsigned int j = 0; j < all_words.size() - 1; j++) {
-            /*if (all_words[j][0] >= 'А' && all_words[j][0] <= 'Я') {
-                all_words[j][0] = all_words[j][0] + ('а' - 'А');
-            }*/
             if (all_words[j][0] > all_words[j + 1][0]) {
                 string buff = all_words[j];
                 all_words[j] = all_words[j + 1];
@@ -51,7 +46,6 @@ vector <string> bubble(vector<string> &all_words) {
 void f_statistic(int *statistic, vector<string> &all_words, int k, int i) {
     if (all_words[k][i] >= '0' && all_words[k][i] <= '9') {
         statistic[int(all_words[k][i])-48] += 1;
-        //cout << "proverca:: " << all_words[k][i];
     }
     else if (all_words[k][i] >= 'А' && all_words[k][i] <= 'Я') {
         statistic[10 + int(all_words[k][i] - 'А')] += 1;
