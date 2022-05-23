@@ -13,6 +13,9 @@ list<string> division(string text) {
         if ((symbol >= '0' && symbol <= '9') || (symbol >= 'А' && symbol <= 'я')) {
             word.push_back(symbol);
         }
+        else if (symbol == 'ё' || symbol == 'Ё') {
+            word.push_back('е');
+        }
         else if (!word.empty()) {
             string fword(word.begin(), word.end());
             all_words.push_back(fword);
